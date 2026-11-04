@@ -1,0 +1,163 @@
+/*
+ * Quiet Room Massage — design tokens.
+ * The ONLY file with raw colours, fonts, sizes and spacing (see DESIGN.md).
+ * Every other stylesheet uses these custom properties.
+ */
+:root {
+  /* ── Colour ─────────────────────────────────────────────── */
+  --paper: #faf7f1;
+  --raised: #fffdf9;
+  --oat: #f1eadf;
+  --oat-deep: #e7ded0;
+  --sage-100: #e6ebe1;
+  --sage-200: #d9e1d3;
+  --rule: #d8d0c3;
+  --line-input: #857c6f;
+  --line-soft: #c4baab;     /* borders of choice buttons named by their own text (decorative) */
+  --mark: #6e8470;
+  --ink: #2b2925;
+  --ink-soft: #4a463f;
+  --muted: #655f55;
+  --clay: #9c4630;
+  --scrim: rgb(43 41 37 / 0.07);
+  --clay-wash: color-mix(in oklab, var(--clay) 6%, var(--raised));
+  --mark-halo: color-mix(in oklab, var(--mark) 22%, transparent);
+
+  /* Owner-editable (brand.accent) — set on <html> at run time. */
+  --accent: #4a5d4c;
+  --accent-strong: color-mix(in oklab, var(--accent) 82%, var(--ink));
+  --accent-tint: color-mix(in oklab, var(--accent) 12%, var(--raised));
+  --accent-wash: color-mix(in oklab, var(--accent) 7%, var(--raised));
+  --on-accent: #faf7f1;
+
+  /* ── Type ───────────────────────────────────────────────── */
+  --font-display: 'Newsreader Variable', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --font-text: 'Source Sans 3 Variable', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+
+  --text-micro: 0.75rem;
+  --text-xs: 0.8125rem;
+  --text-sm: 0.9375rem;
+  --text-md: clamp(1rem, 0.97rem + 0.12vw, 1.0625rem);
+  --text-lg: clamp(1.125rem, 1.06rem + 0.3vw, 1.3125rem);
+  --text-xl: clamp(1.375rem, 1.24rem + 0.6vw, 1.75rem);
+  --text-2xl: clamp(2rem, 1.6rem + 1.8vw, 3rem);
+  --text-3xl: clamp(2.625rem, 1.75rem + 3.9vw, 4.75rem);
+  --text-code: clamp(1.875rem, 1.6rem + 1.2vw, 2.375rem);
+
+  --leading-display: 1.06;
+  --leading-heading: 1.14;
+  --leading-body: 1.62;
+  --leading-tight: 1.3;
+
+  --tracking-display: -0.012em;
+  --tracking-eyebrow: 0.14em;
+  --tracking-button: 0.02em;
+  --tracking-code: 0.42em;
+  --tracking-tag: 0.03em;
+
+  --weight-text: 400;
+  --weight-strong: 500;
+  --weight-display: 300;
+
+  /* Heading style (brand.headings): light (default) | book | sans */
+  --heading-font: var(--font-display);
+  --heading-weight: var(--weight-display);
+  --heading-tracking: var(--tracking-display);
+
+  --measure: 62ch;
+  --measure-lede: 38ch;
+  --measure-title: 14ch;
+
+  /* ── Space ──────────────────────────────────────────────── */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8.5rem;
+
+  --gutter: clamp(1.25rem, 7vw, 7rem);
+  --section-pad: clamp(4.5rem, 3rem + 7vw, 10.5rem);
+  --desk-pad: clamp(var(--space-5), 4vw, var(--space-8));
+  --page-max: 80rem;
+  --header-height: 4.5rem;
+
+  /* ── Sizes ──────────────────────────────────────────────── */
+  --tap: 2.75rem;            /* 44 px — the smallest tap target */
+  --control: 3.25rem;        /* 52 px — buttons and inputs */
+  --chip: 3rem;              /* 48 px — time chips */
+  --day-cell: 2.875rem;      /* 46 px — month grid cells */
+  --day-card-w: 4rem;        /* 64 px — phone day rail */
+  --day-card-h: 5.25rem;     /* 84 px */
+  --dot: 0.3125rem;          /* 5 px — the "open" mark */
+  --hairline: 1px;
+  --rule-strong: 2px;
+  --focus-width: 2px;
+  --focus-offset: 3px;
+  --logo-height: 2rem;
+  --logo-max: 12rem;
+  --hero-max: 52rem;
+  --summary-width: 19rem;
+  --print-max: 18rem;        /* a service photo in the ledger */
+  --time-min: 5.5rem;        /* a time chip's narrowest width */
+  --ledger-duration: 5rem;
+  --label-col: 7rem;
+  --form-max: 34rem;
+  --code-width: 15rem;
+  --code-height: 4rem;
+  --sticky-offset: 6.5rem;   /* room above a step heading for the phone summary strip */
+  --portrait: 4.5rem;
+  --status-dot: 0.5rem;
+  --skeleton-block: 20rem;
+  --skeleton-times: 9rem;
+
+  /* ── Shape ──────────────────────────────────────────────── */
+  --radius-0: 0;
+  --radius-1: 2px;
+  --radius-pill: 999px;
+  --shadow-soft: 0 -0.5rem 1.5rem var(--scrim);
+  --shadow-top: 0 0.5rem 1.5rem var(--scrim);
+
+  /* ── Motion ─────────────────────────────────────────────── */
+  --dur-quick: 160ms;
+  --dur-step: 280ms;
+  --dur-enter: 480ms;
+  --dur-photo: 600ms;
+  --stagger: 40ms;
+  --dur-shimmer: 1600ms;
+  --dur-spin: 900ms;
+  --ease-settle: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.65, 0, 0.35, 1);
+  --rise: 0.625rem;
+  --settle-scale: 1.03;
+
+  /* ── Layers ─────────────────────────────────────────────── */
+  --layer-sticky: 5;
+  --layer-banner: 10;
+}
+
+:root[data-headings='book'] {
+  --heading-weight: 430;
+}
+
+:root[data-headings='sans'] {
+  --heading-font: var(--font-text);
+  --heading-weight: 340;
+  --heading-tracking: -0.018em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-quick: 1ms;
+    --dur-step: 1ms;
+    --dur-enter: 1ms;
+    --dur-photo: 1ms;
+    --stagger: 0ms;
+    --rise: 0px;
+    --settle-scale: 1;
+  }
+}

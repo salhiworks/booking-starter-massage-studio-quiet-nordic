@@ -1,0 +1,8 @@
+/*
+ * The packaged dashboard keeps its own design. The site brands it with one
+ * thing — its accent, per appearance (INTEGRATION.md §10). Deep sage, the
+ * site's accent hue: deep with white text in Light, light and softened with
+ * near-black text in Dark.
+ */
+:root .pbe-admin[data-mode='light'] { --pbe-accent: #4a5d4c; --pbe-accent-text: #ffffff; } /* 6.9:1 on the dashboard, 7.1:1 text */
+:root .pbe-admin[data-mode='dark']  { --pbe-accent: #a9c2a8; --pbe-accent-text: #151a15; } /* 9.6:1 on the dashboard, 9.2:1 text */

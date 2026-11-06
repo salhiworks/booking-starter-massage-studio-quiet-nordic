@@ -3,7 +3,7 @@
 A one-page booking website for a massage & wellness studio, shipped as **Quiet
 Room Massage** (a fictional studio in Vancouver, BC) for the owner to make their
 own. Its identity lives in `src/site.config.ts`; `CUSTOMIZE.md` is the prompt that
-personalizes it. Built around **@profitstudio/booking-engine** **2.0.0-beta.2**
+personalizes it. Built around **@profitstudio/booking-engine** **2.0.0-beta.3**
 (pinned; lock in `booking-engine.lock.json`). The engine owns booking; this
 project owns the public design.
 

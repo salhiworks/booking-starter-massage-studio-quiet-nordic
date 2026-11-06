@@ -26,7 +26,7 @@ studio** — nobody shown works at your studio.
 
 | Package | Licence | Notes |
 |---|---|---|
-| `@profitstudio/booking-engine` 2.0.0-beta.2 | MIT | The booking engine and the packaged dashboard |
+| `@profitstudio/booking-engine` 2.0.0-beta.3 | MIT | The booking engine and the packaged dashboard |
 | `react`, `react-dom` | MIT | |
 | `@fontsource-variable/newsreader`, `@fontsource-variable/source-sans-3` | OFL-1.1 | Typefaces |
 

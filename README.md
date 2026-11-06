@@ -13,7 +13,7 @@ a fictional massage & wellness studio in Vancouver, BC:
 The look: warm white paper, oat and stone surfaces with soft sage, an airy light serif (Newsreader) with a calm humanist sans, thin rules and slow motion.
 
 Booking runs on [`@profitstudio/booking-engine`](https://www.npmjs.com/package/@profitstudio/booking-engine)
-**2.0.0-beta.2** (pinned) with your own Supabase project and Resend for email.
+**2.0.0-beta.3** (pinned) with your own Supabase project and Resend for email.
 
 ## 1. Try it (no accounts needed)
 

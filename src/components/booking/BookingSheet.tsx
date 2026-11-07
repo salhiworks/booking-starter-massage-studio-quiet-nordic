@@ -1,4 +1,4 @@
-import { useEffect, useRef, type MouseEvent } from 'react';
+import { useEffect, useRef, type FocusEvent, type MouseEvent } from 'react';
 import type { Business, Service } from '@profitstudio/booking-engine';
 import type { SiteValues } from '../../lib/content';
 import { useModalDialog } from '../../lib/dialog';
@@ -45,6 +45,22 @@ export function BookingSheet({ open, onClose, values, business, services, intent
     if (event.target === event.currentTarget) onClose();
   };
 
+  // A focused field is never left under the pinned submit / Continue bar (browsers
+  // only partly honour scroll-padding when they scroll a focused field into view).
+  const keepFieldClear = (event: FocusEvent<HTMLDivElement>) => {
+    const field = event.target;
+    if (!(field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement || field instanceof HTMLSelectElement)) return;
+    const body = event.currentTarget;
+    requestAnimationFrame(() => {
+      const bar = body.querySelector<HTMLElement>('.details .step-actions, .choice-bar');
+      if (!bar || bar.contains(field)) return;
+      const f = field.getBoundingClientRect();
+      const b = bar.getBoundingClientRect();
+      const room = 12;
+      if (f.bottom > b.top - room && f.top < b.bottom) body.scrollBy({ top: f.bottom - b.top + room });
+    });
+  };
+
   const name = business.status === 'ready' ? business.data.name : null;
 
   return (
@@ -64,7 +80,7 @@ export function BookingSheet({ open, onClose, values, business, services, intent
             <span className="sr-only">Close the booking</span>
           </button>
         </header>
-        <div className="sheet__body">
+        <div className="sheet__body" onFocus={keepFieldClear}>
           <SheetSurface business={business} services={services} intent={intent} onRetry={onRetry} onServicesStale={onServicesStale} />
         </div>
       </div>

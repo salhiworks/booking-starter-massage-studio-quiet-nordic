@@ -1,38 +1,48 @@
 /*
- * Quiet Room Massage — design tokens.
+ * Quiet Room Massage — design tokens (Quiet Nordic · Linen & Daylight).
  * The ONLY file with raw colours, fonts, sizes and spacing (see DESIGN.md).
  * Every other stylesheet uses these custom properties.
  */
 :root {
   /* ── Colour ─────────────────────────────────────────────── */
-  --paper: #faf7f1;
-  --raised: #fffdf9;
-  --oat: #f1eadf;
-  --oat-deep: #e7ded0;
-  --sage-100: #e6ebe1;
-  --sage-200: #d9e1d3;
-  --rule: #d8d0c3;
-  --line-input: #857c6f;
-  --line-soft: #c4baab;     /* borders of choice buttons named by their own text (decorative) */
-  --mark: #6e8470;
-  --ink: #2b2925;
-  --ink-soft: #4a463f;
-  --muted: #655f55;
-  --clay: #9c4630;
-  --scrim: rgb(43 41 37 / 0.07);
+  /* Linen & daylight: ivory paper, warm stone, quiet sage, one deep forest. */
+  --paper: #f7f3ec;          /* page (soft ivory) */
+  --raised: #fcfaf6;         /* inputs, the booking sheet, cards */
+  --oat: #ece5d9;            /* warm stone — the studio band, summary, chips */
+  --oat-deep: #e1d8ca;       /* deeper stone — frames while loading, skeletons */
+  --sage-100: #e4e8dd;       /* the booking band */
+  --sage-200: #d3dbcc;       /* quiet tints (sample tags, counts) */
+  --rule: #d6cdbf;           /* hairlines (decorative) */
+  --line-input: #857c6f;     /* input and icon-button borders (≥ 3:1 on paper, raised, stone) */
+  --line-soft: #c9bfb0;      /* borders of choice buttons named by their own text */
+  --mark: #6a806c;           /* the "open" dot (≥ 3:1) */
+  --ink: #22241f;
+  --ink-soft: #45463f;
+  --muted: #615d53;
+  --clay: #9a442f;           /* errors only */
+  --scrim: rgb(34 36 31 / 0.08);
+  --veil: rgb(23 31 26 / 0.46); /* the page behind the booking sheet */
   --clay-wash: color-mix(in oklab, var(--clay) 6%, var(--raised));
   --mark-halo: color-mix(in oklab, var(--mark) 22%, transparent);
 
+  /* Deep forest: the ritual band and the footer (never owner-editable). */
+  --forest: #1f2b24;
+  --forest-2: #2a382f;
+  --on-forest: #f3eee4;      /* 12.7:1 on forest */
+  --on-forest-soft: #c9cfc3; /* 9.2:1 */
+  --forest-line: #435249;    /* decorative rules on forest */
+  --forest-glow: #a9c2a8;    /* sage numerals on forest, 7.7:1 */
+
   /* Owner-editable (brand.accent) — set on <html> at run time. */
-  --accent: #4a5d4c;
-  --accent-strong: color-mix(in oklab, var(--accent) 82%, var(--ink));
+  --accent: #405846;
+  --accent-strong: color-mix(in oklab, var(--accent) 80%, var(--ink));
   --accent-tint: color-mix(in oklab, var(--accent) 12%, var(--raised));
   --accent-wash: color-mix(in oklab, var(--accent) 7%, var(--raised));
-  --on-accent: #faf7f1;
+  --on-accent: #f7f3ec;
 
   /* ── Type ───────────────────────────────────────────────── */
   --font-display: 'Newsreader Variable', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
-  --font-text: 'Source Sans 3 Variable', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-text: 'Albert Sans Variable', 'Avenir Next', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
 
   --text-micro: 0.75rem;
   --text-xs: 0.8125rem;
@@ -40,23 +50,25 @@
   --text-md: clamp(1rem, 0.97rem + 0.12vw, 1.0625rem);
   --text-lg: clamp(1.125rem, 1.06rem + 0.3vw, 1.3125rem);
   --text-xl: clamp(1.375rem, 1.24rem + 0.6vw, 1.75rem);
-  --text-2xl: clamp(2rem, 1.6rem + 1.8vw, 3rem);
-  --text-3xl: clamp(2.625rem, 1.75rem + 3.9vw, 4.75rem);
+  --text-2xl: clamp(2.125rem, 1.6rem + 2.2vw, 3.5rem);
+  --text-3xl: clamp(2.75rem, 1.6rem + 4.6vw, 5.5rem);
+  --text-hero: clamp(2.75rem, 1.1rem + 4.4vw, 5.25rem);
+  --text-numeral: clamp(2.5rem, 2rem + 2vw, 3.75rem);
   --text-code: clamp(1.875rem, 1.6rem + 1.2vw, 2.375rem);
 
-  --leading-display: 1.06;
+  --leading-display: 1.02;
   --leading-heading: 1.14;
   --leading-body: 1.62;
   --leading-tight: 1.3;
 
-  --tracking-display: -0.012em;
-  --tracking-eyebrow: 0.14em;
+  --tracking-display: -0.018em;
+  --tracking-eyebrow: 0.16em;
   --tracking-button: 0.02em;
   --tracking-code: 0.42em;
   --tracking-tag: 0.03em;
 
   --weight-text: 400;
-  --weight-strong: 500;
+  --weight-strong: 560;
   --weight-display: 300;
 
   /* Heading style (brand.headings): light (default) | book | sans */
@@ -66,7 +78,7 @@
 
   --measure: 62ch;
   --measure-lede: 38ch;
-  --measure-title: 14ch;
+  --measure-title: 13ch;
 
   /* ── Space ──────────────────────────────────────────────── */
   --space-1: 0.25rem;
@@ -81,10 +93,11 @@
   --space-10: 8.5rem;
 
   --gutter: clamp(1.25rem, 7vw, 7rem);
-  --section-pad: clamp(4.5rem, 3rem + 7vw, 10.5rem);
+  --section-pad: clamp(4.5rem, 2.5rem + 7vw, 9.5rem);
   --desk-pad: clamp(var(--space-5), 4vw, var(--space-8));
   --page-max: 80rem;
   --header-height: 4.5rem;
+  --sheet-width: 66rem;      /* the booking sheet from 900 px */
 
   /* ── Sizes ──────────────────────────────────────────────── */
   --tap: 2.75rem;            /* 44 px — the smallest tap target */
@@ -101,9 +114,9 @@
   --logo-height: 2rem;
   --logo-max: 12rem;
   --hero-max: 52rem;
-  --summary-width: 19rem;
+  --summary-width: 18.5rem;
   --print-max: 18rem;        /* a service photo in the ledger */
-  --time-min: 5.5rem;        /* a time chip's narrowest width */
+  --time-min: 6.75rem;       /* a time chip's narrowest width */
   --ledger-duration: 5rem;
   --label-col: 7rem;
   --form-max: 34rem;
@@ -111,6 +124,9 @@
   --code-height: 4rem;
   --sticky-offset: 6.5rem;   /* room above a step heading for the phone summary strip */
   --portrait: 4.5rem;
+  --monogram: 3.25rem;
+  --hero-detail: clamp(6.5rem, 11vw, 10.5rem);
+  --menu-name: 21rem;
   --status-dot: 0.5rem;
   --skeleton-block: 20rem;
   --skeleton-times: 9rem;
@@ -118,15 +134,19 @@
   /* ── Shape ──────────────────────────────────────────────── */
   --radius-0: 0;
   --radius-1: 2px;
+  --radius-2: 6px;           /* the booking sheet, photo prints */
   --radius-pill: 999px;
   --shadow-soft: 0 -0.5rem 1.5rem var(--scrim);
   --shadow-top: 0 0.5rem 1.5rem var(--scrim);
+  --shadow-print: 0 1.25rem 2.5rem -1rem rgb(34 36 31 / 0.28);
+  --shadow-sheet: -1.5rem 0 4rem rgb(23 31 26 / 0.18);
 
   /* ── Motion ─────────────────────────────────────────────── */
   --dur-quick: 160ms;
   --dur-step: 280ms;
   --dur-enter: 480ms;
-  --dur-photo: 600ms;
+  --dur-photo: 900ms;
+  --dur-sheet: 420ms;
   --stagger: 40ms;
   --dur-shimmer: 1600ms;
   --dur-spin: 900ms;
@@ -138,6 +158,7 @@
   /* ── Layers ─────────────────────────────────────────────── */
   --layer-sticky: 5;
   --layer-banner: 10;
+  --layer-header: 8;
 }
 
 :root[data-headings='book'] {
@@ -146,8 +167,8 @@
 
 :root[data-headings='sans'] {
   --heading-font: var(--font-text);
-  --heading-weight: 340;
-  --heading-tracking: -0.018em;
+  --heading-weight: 380;
+  --heading-tracking: -0.028em;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -156,6 +177,7 @@
     --dur-step: 1ms;
     --dur-enter: 1ms;
     --dur-photo: 1ms;
+    --dur-sheet: 1ms;
     --stagger: 0ms;
     --rise: 0px;
     --settle-scale: 1;

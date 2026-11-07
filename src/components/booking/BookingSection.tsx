@@ -1,62 +1,46 @@
 import type { Business, Service } from '@profitstudio/booking-engine';
-import { useEffect, useRef } from 'react';
+import type { StartBooking } from '../../App';
 import type { SiteValues } from '../../lib/content';
-import type { Resource } from '../../lib/resource';
 import { engine } from '../../lib/engine';
+import type { Resource } from '../../lib/resource';
+import { Emphasis } from '../Emphasis';
+import { bookLink } from '../../lib/bookLink';
 import { Notice } from '../Notice';
-import { BookingFlow } from './BookingFlow';
-import type { BookingIntent } from './BookingFlow';
 import { ContactInstead } from './ContactInstead';
 
 interface BookingSectionProps {
   values: SiteValues;
   business: Resource<Business>;
   services: Resource<Service[]>;
-  intent: BookingIntent | null;
   onRetry: () => void;
-  onServicesStale: () => void;
+  onBook: StartBooking;
 }
 
-export function BookingSection({ values, business, services, intent, onRetry, onServicesStale }: BookingSectionProps) {
-  const sectionRef = useRef<HTMLElement>(null);
-  const flowShown =
-    business.status === 'ready' &&
-    business.data.policies.onlineBookingEnabled &&
-    services.status === 'ready' &&
-    services.data.length > 0;
-
-  // A treatment's "Book" button: the flow brings itself into view; while it is
-  // not shown (loading, paused, nothing to book, a problem), show this section
-  // and its message instead of doing nothing.
-  const handledNonce = useRef(intent?.nonce ?? 0);
-  useEffect(() => {
-    if (!intent || intent.nonce === handledNonce.current) return;
-    handledNonce.current = intent.nonce;
-    if (flowShown) return;
-    const heading = sectionRef.current?.querySelector<HTMLElement>('#book-title');
-    if (heading && !heading.hasAttribute('tabindex')) heading.tabIndex = -1;
-    const target = heading ?? sectionRef.current;
-    target?.focus({ preventScroll: true });
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    target?.scrollIntoView({ block: 'start', behavior: reduce ? 'auto' : 'smooth' });
-  }, [intent, flowShown]);
-
+/**
+ * #book on the page: how booking works and the button that opens the booking
+ * sheet — or, while online booking is not possible, why, with the studio's
+ * contact details. Every Book button lands here in that case.
+ */
+export function BookingSection({ values, business, services, onRetry, onBook }: BookingSectionProps) {
   return (
-    <section id="book" className="section book" aria-labelledby="book-title" ref={sectionRef}>
-      <div className="page">
-        <header className="section-head">
-          <h2 id="book-title">{values['book.title']}</h2>
+    <section id="book" className="section book" aria-labelledby="book-title">
+      <div className="page book__grid">
+        <header className="section-head book__head">
+          <p className="eyebrow">Appointments</p>
+          <h2 id="book-title">
+            <Emphasis text={values['book.title']} />
+          </h2>
           {values['book.intro'] && <p className="section-intro">{values['book.intro']}</p>}
         </header>
-        <div className="desk">
-          <BookingBody business={business} services={services} intent={intent} onRetry={onRetry} onServicesStale={onServicesStale} />
+        <div className="book__body">
+          <BookingBody values={values} business={business} services={services} onRetry={onRetry} onBook={onBook} />
         </div>
       </div>
     </section>
   );
 }
 
-function BookingBody({ business, services, intent, onRetry, onServicesStale }: Omit<BookingSectionProps, 'values'>) {
+function BookingBody({ values, business, services, onRetry, onBook }: BookingSectionProps) {
   const notConfigured =
     engine.mode === 'unconfigured' ||
     (business.status === 'error' && business.error.code === 'NOT_CONFIGURED') ||
@@ -73,12 +57,13 @@ function BookingBody({ business, services, intent, onRetry, onServicesStale }: O
 
   if (business.status === 'loading' || services.status === 'loading') {
     return (
-      <div className="flow flow--loading" aria-busy="true">
+      <div className="book__loading" aria-busy="true">
         <p className="sr-only" role="status">
-          Loading the booking calendar…
+          Loading…
         </p>
-        <span className="skeleton skeleton--steps" aria-hidden="true" />
-        <span className="skeleton skeleton--block" aria-hidden="true" />
+        <span className="skeleton skeleton--row" aria-hidden="true" />
+        <span className="skeleton skeleton--row" aria-hidden="true" />
+        <span className="skeleton skeleton--row" aria-hidden="true" />
       </div>
     );
   }
@@ -123,5 +108,32 @@ function BookingBody({ business, services, intent, onRetry, onServicesStale }: O
     );
   }
 
-  return <BookingFlow business={business.data} services={services.data} intent={intent} onServicesStale={onServicesStale} />;
+  return (
+    <div className="book__how">
+      <ol className="book__steps">
+        <li>
+          <span className="book__n" aria-hidden="true">1</span>
+          <span className="book__step">Choose a treatment</span>
+          <span className="book__text">From the menu above, or inside the booking — each length is its own session.</span>
+        </li>
+        <li>
+          <span className="book__n" aria-hidden="true">2</span>
+          <span className="book__step">Pick a day and time</span>
+          <span className="book__text">Only times that are really free are shown, in the studio's local time.</span>
+        </li>
+        <li>
+          <span className="book__n" aria-hidden="true">3</span>
+          <span className="book__step">Confirm it's you</span>
+          <span className="book__text">
+            {__BOOKING_DEMO__
+              ? 'In this demo no email is sent: any 6 digits confirm it.'
+              : 'We email you a 6-digit code — no account, no password.'}
+          </span>
+        </li>
+      </ol>
+      <a className="button button--large" href="#book" onClick={bookLink(onBook)}>
+        {values['hero.cta']}
+      </a>
+    </div>
+  );
 }

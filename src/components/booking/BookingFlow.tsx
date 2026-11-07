@@ -53,7 +53,8 @@ const STEPS: Array<{ id: Exclude<Step, 'done'>; label: string; title: string }> 
   { id: 'service', label: 'Treatment', title: 'Choose a treatment' },
   { id: 'time', label: 'Date & time', title: 'Choose a day and time' },
   { id: 'details', label: 'Your details', title: 'Your details' },
-  { id: 'code', label: 'Confirm email', title: 'Check your email' },
+  // The Live Demo sends no email: its last step must not promise one.
+  { id: 'code', label: __BOOKING_DEMO__ ? 'Confirm' : 'Confirm email', title: __BOOKING_DEMO__ ? 'Confirm it’s you' : 'Check your email' },
 ];
 
 const TAKEN = 'That time is no longer available — it may have just been booked. Here are the times still open.';
@@ -63,7 +64,8 @@ const RAN_OUT = 'Your code ran out, so the time was released. Choose a time agai
 const ENDED = 'Your request has ended, so the time was released. Choose a time again and we’ll send a new code.';
 
 export interface BookingIntent {
-  serviceId: string;
+  /** A treatment chosen from the page, or null for a general “Book”. */
+  serviceId: string | null;
   nonce: number;
 }
 
@@ -136,10 +138,8 @@ export function BookingFlow({ business, services, intent, onServicesStale }: Boo
     const heading = headingRef.current;
     if (!heading) return;
     heading.focus({ preventScroll: true });
-    const top = heading.getBoundingClientRect().top;
-    if (top < 0 || top > window.innerHeight * 0.5) {
-      heading.scrollIntoView({ block: 'start', behavior: reducedMotion() ? 'auto' : 'smooth' });
-    }
+    // Inside the sheet each step starts at its heading (scroll-margin keeps it clear of the phone's session strip).
+    heading.scrollIntoView({ block: 'start', behavior: reducedMotion() ? 'auto' : 'smooth' });
   }, [focusTick]);
 
   /** The chosen service was removed or paused by the owner meanwhile. */
@@ -344,7 +344,7 @@ export function BookingFlow({ business, services, intent, onServicesStale }: Boo
     onIntent.current = (id) => void chooseService(id);
   });
   useEffect(() => {
-    if (intent) onIntent.current(intent.serviceId);
+    if (intent?.serviceId) onIntent.current(intent.serviceId);
   }, [intent]);
 
   // ── Step 2: date and time ──────────────────────────────────────────
@@ -594,7 +594,7 @@ export function BookingFlow({ business, services, intent, onServicesStale }: Boo
   const contactNotice = notice?.contact ? business.contact : null;
 
   return (
-    <div className="flow" data-step={step}>
+    <div className="flow" id="book-flow" data-step={step}>
       {step !== 'done' && (
         <ol className="flow__steps" aria-label="Booking steps">
           {STEPS.map((s, i) => (
@@ -634,9 +634,9 @@ export function BookingFlow({ business, services, intent, onServicesStale }: Boo
               <p className="flow__counter">
                 Step {currentIndex + 1} of {STEPS.length}
               </p>
-              <h3 className="step-title" tabIndex={-1} ref={headingRef}>
+              <h2 className="step-title" tabIndex={-1} ref={headingRef} data-step-heading="">
                 {current.title}
-              </h3>
+              </h2>
 
               {notice && (
                 <Notice tone={notice.tone}>
@@ -777,7 +777,7 @@ function ServiceStep({ services, selected, locale, busy, onChoose }: ServiceStep
     <ul className="pick-list" role="list">
       {groups.map((group) => (
         <li className="pick-group" key={group.key}>
-          <h4 className="pick-group__title">{group.title}</h4>
+          <h3 className="pick-group__title">{group.title}</h3>
           <ul className="pick-lengths" role="list">
             {group.services.map((s) => (
               <li key={s.id}>

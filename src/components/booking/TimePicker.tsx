@@ -1,5 +1,13 @@
 import { formatClockTime, formatDate, groupSlotsByPartOfDay, nextAvailableDay } from '@profitstudio/booking-engine';
 import type { AvailabilityDay, PartOfDay, Slot } from '@profitstudio/booking-engine';
+import type { MouseEvent } from 'react';
+import { reducedMotion } from './details';
+
+/** Keep the chosen time in view above the pinned Continue bar (the sheet's scroll-padding-bottom). */
+function keepInView(event: MouseEvent<HTMLButtonElement>) {
+  const button = event.currentTarget;
+  requestAnimationFrame(() => button.scrollIntoView({ block: 'nearest', behavior: reducedMotion() ? 'auto' : 'smooth' }));
+}
 
 const PART_LABEL: Record<PartOfDay, string> = { morning: 'Morning', afternoon: 'Afternoon', evening: 'Evening' };
 
@@ -95,7 +103,15 @@ export function TimePicker({ day, days, monthLabel, part, onPart, selected, onSe
       <ul className="times" role="list" aria-label={`${PART_LABEL[active.part]} times on ${dateLabel}`}>
         {active.slots.map((slot) => (
           <li key={slot.startsAt}>
-            <button type="button" className="time" aria-pressed={selected?.startsAt === slot.startsAt} onClick={() => onSelect(slot)}>
+            <button
+              type="button"
+              className="time"
+              aria-pressed={selected?.startsAt === slot.startsAt}
+              onClick={(event) => {
+                onSelect(slot);
+                keepInView(event);
+              }}
+            >
               {formatClockTime(slot.time, locale)}
             </button>
           </li>

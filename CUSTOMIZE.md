@@ -21,7 +21,8 @@ Open and change only these files; don't explore the rest of the project:
 3. src/content/site.ts — rewrite every DEFAULT text for my business: the line
    above the headline, headline, introduction, section texts, FAQ answers and the
    search title and description. Keep field ids, types, limits and photos. Keep
-   sample team members and example reviews labelled as samples.
+   sample team members and example reviews labelled as samples. Headlines may set
+   one or two words in *asterisks* (shown in italic) — keep that style.
 4. Only if the current palette clearly doesn't fit my personality (otherwise skip
    this step and don't open these files): src/styles/tokens.css and
    src/admin-theme.css — adjust the palette, keeping every contrast ratio noted in DESIGN.md.

@@ -1,21 +1,20 @@
 # Quiet Room Massage — visual system
 
-**Concept.** The page behaves like the room: warm white paper, oat and stone
-surfaces, hairline rules and an airy serif — nothing competes for attention, so
-the one clear action, *Book a session*, is always the calmest thing to do.
+**Quiet Nordic · Linen & Daylight.** The page behaves like a calm Scandinavian
+treatment room in the afternoon: soft ivory paper, warm stone, quiet sage, and
+one deep forest green that appears only twice — the ritual and the footer.
+Daylight photographs of linen, pale wood and hands at work carry the mood; the
+type is editorial and light; nothing hurries. The one action, *Book a session*,
+is always the calmest thing on the screen.
 
-Style direction: *Quiet Nordic* — oat, stone and soft sage on warm white; a
-light, elegant serif for display with a calm humanist sans; wide margins, thin
-rules and slow, gentle motion.
+What keeps it its own (and far from Atelier's arched blush mirror or After
+Hours' lamplit espresso): square-cut photographs with a single "print" laid
+over a corner, a small sage leaf as the only ornament, Newsreader italics in the
+accent colour, a forest band where the visit is told as four moments on one
+thread, and booking in a linen sheet with a forest header.
 
-What keeps it far from a barbershop or a hair salon: no dark grounds, no
-condensed or heavy type, no badges, stripes or "menu board". The treatments read
-like a quiet ledger (rules, not cards), photographs are pale and tactile, and
-the booking flow sits on a soft sage desk like a form filled in at a calm front
-desk.
-
-All values below live in **`src/styles/tokens.css`** (the only file with raw
-colours, fonts, sizes and spacing). Every other stylesheet uses the tokens.
+All values live in **`src/styles/tokens.css`** (the only file with raw colours,
+fonts, sizes and spacing). Every other stylesheet uses the tokens.
 
 ---
 
@@ -23,34 +22,26 @@ colours, fonts, sizes and spacing). Every other stylesheet uses the tokens.
 
 | Role | Face | Setting |
 |---|---|---|
-| Display (h1, h2, treatment names, the wordmark) | **Newsreader** (variable: `opsz` 6–72, `wght` 200–800) — Production Type, SIL OFL | weight 300, optical size follows the font size (large sizes get the fine display cut), tracking −0.012em |
-| Text (body, UI, forms, numbers) | **Source Sans 3** (variable `wght`) — Adobe, SIL OFL | weight 400 body, 500 labels/buttons; tabular lining numbers for prices and times |
+| Display (h1–h3, prices, numerals, the wordmark) | **Newsreader** (variable: `opsz` 6–72, `wght` 200–800, with its italic) — Production Type, SIL OFL | weight 300, optical size follows the font size, tracking −0.018em; `*words*` in a headline become italics in the accent colour |
+| Text (body, UI, forms) | **Albert Sans** (variable `wght`) — Scandinavian geometric sans, SIL OFL | 400 body, 560 labels and buttons; tabular numbers for times |
 
 Both are self-hosted with `@fontsource-variable/*` (no font CDN), `font-display: swap`.
 
-Why: Newsreader's light display cut has real character — calm, literary, a
-little warm — without the wedding-spa cliché of a high-contrast Garamond.
-Source Sans 3 is a humanist sans that stays very readable at 16–17 px on a
-phone in the evening.
-
-**Owner heading style** (`brand.headings`, set on `<html data-headings>`):
+**Owner heading style** (`brand.headings`, on `<html data-headings>`):
 `light` (default — Newsreader 300), `book` (Newsreader 430), `sans`
-(Source Sans 3 at 340, slightly tighter).
-
-### Type scale (fluid, phone → wide)
+(Albert Sans 380; emphasis then stays upright, in the accent colour).
 
 | Token | Size | Use |
 |---|---|---|
-| `--text-xs` | 0.8125rem (13 px) | eyebrows (uppercase, +0.14em), captions, calendar marks |
-| `--text-sm` | 0.9375rem (15 px) | hints, labels, summary rows |
-| `--text-md` | 1rem → 1.0625rem | body |
-| `--text-lg` | 1.125rem → 1.3125rem | ledes, intros |
-| `--text-xl` | 1.375rem → 1.75rem | h3, treatment names |
-| `--text-2xl` | 2rem → 3rem | h2 section titles |
-| `--text-3xl` | 2.625rem → 4.75rem | h1 |
-
-Line height: display 1.06, headings 1.14, body 1.62. Measure: body copy at most
-~62ch, ledes ~38ch.
+| `--text-xs` | 13 px | eyebrows (uppercase, +0.16em), captions |
+| `--text-sm` | 15 px | hints, labels, summary rows |
+| `--text-md` | 16 → 17 px | body |
+| `--text-lg` | 18 → 21 px | ledes, FAQ questions, prices |
+| `--text-xl` | 22 → 28 px | h3, treatment names, fact values |
+| `--text-2xl` | 34 → 56 px | h2 section titles |
+| `--text-3xl` | 44 → 88 px | the footer name mark |
+| `--text-hero` | 44 → 84 px | h1 |
+| `--text-numeral` | 40 → 60 px | ritual numerals (italic) |
 
 ---
 
@@ -58,132 +49,129 @@ Line height: display 1.06, headings 1.14, body 1.62. Measure: body copy at most
 
 | Token | Hex | Role |
 |---|---|---|
-| `--paper` | `#FAF7F1` | page (warm white) |
-| `--raised` | `#FFFDF9` | inputs, the booking panel |
-| `--oat` | `#F1EADF` | the "First visit" band |
-| `--oat-deep` | `#E7DED0` | footer, preview banner, skeletons |
-| `--sage-100` | `#E6EBE1` | the booking desk band |
-| `--sage-200` | `#D9E1D3` | quiet tints (sample tags, selected rows) |
-| `--rule` | `#D8D0C3` | hairlines (decorative) |
-| `--line-input` | `#857C6F` | text-input and icon-button borders (≥ 3:1 on every surface) |
-| `--line-soft` | `#C4BAAB` | borders of choice buttons that are named by their own text (treatment lengths, days, times) |
-| `--mark` | `#6E8470` | the "open" dot in the calendar (≥ 3:1) |
-| `--ink` | `#2B2925` | headings, key text |
-| `--ink-soft` | `#4A463F` | body text |
-| `--muted` | `#655F55` | secondary text, eyebrows |
-| `--accent` | `#4A5D4C` | deep sage — buttons, links, focus, selection (owner-editable) |
-| `--accent-strong` | accent mixed 18% toward ink | hover / pressed |
-| `--on-accent` | `#FAF7F1` | text on the accent |
-| `--clay` | `#9C4630` | errors only |
+| `--paper` | `#F7F3EC` | page (soft ivory), the booking sheet |
+| `--raised` | `#FCFAF6` | inputs, choice rows, cards |
+| `--oat` (warm stone) | `#ECE5D9` | the studio and visit bands, the session summary |
+| `--oat-deep` | `#E1D8CA` | frames while loading, skeletons |
+| `--sage-100` / `--sage-200` | `#E4E8DD` / `#D3DBCC` | the booking band / tags and counts |
+| `--forest` / `--forest-2` | `#1F2B24` / `#2A382F` | the ritual band, the footer, the sheet header |
+| `--on-forest` / `--on-forest-soft` | `#F3EEE4` / `#C9CFC3` | text on forest |
+| `--forest-glow` | `#A9C2A8` | numerals, labels and beads on forest |
+| `--rule` / `--line-soft` | `#D6CDBF` / `#C9BFB0` | hairlines / borders of self-labelled choices |
+| `--line-input` | `#857C6F` | input and icon-button borders (≥ 3:1) |
+| `--mark` | `#6A806C` | the leaf ornament, "open" dots (≥ 3:1) |
+| `--ink` / `--ink-soft` / `--muted` | `#22241F` / `#45463F` / `#615D53` | headings / body / secondary |
+| `--accent` | `#405846` | deep forest sage — buttons, links, focus, selection, italics (owner-editable) |
+| `--clay` | `#9A442F` | errors only |
 
-### Contrast (WCAG 2.x, computed with the engine's `contrastRatio`)
+### Contrast (WCAG 2.x)
 
 | Pair | Ratio |
 |---|---|
-| ink on paper / oat / oat-deep / sage-100 | 13.6 / 12.2 / 10.9 / 10.8 |
-| ink-soft on paper / oat / oat-deep / sage-200 | 8.8 / 7.9 / 7.0 / 7.0 |
-| muted on paper / raised / oat / oat-deep / sage-100 | 5.9 / 6.2 / 5.3 / 4.7 / 5.2 |
-| accent on paper / raised / oat / oat-deep / sage-100 | 6.6 / 7.0 / 5.9 / 5.3 / 5.9 |
-| paper on accent (buttons) | 6.6 (white on accent 7.1) |
-| clay on paper / raised / oat | 5.9 / 6.2 / 5.3 |
-| line-input on every surface (input borders, non-text, ≥ 3:1) | 3.1–4.1 |
-| mark dot on every surface (non-text, ≥ 3:1) | 3.0–4.0 |
+| ink on paper / raised / stone / sage-100 | 14.2 / 15.0 / 12.5 / 12.6 |
+| ink-soft on paper / stone / sage-200 | 8.6 / 7.6 / 6.7 |
+| muted on paper / raised / stone / sage-100 | 5.9 / 6.3 / 5.2 / 5.3 |
+| accent on paper / raised / stone / sage-100 | 7.0 / 7.5 / 6.2 / 6.3 |
+| paper on accent (buttons) | 7.0 |
+| on-forest / on-forest-soft / forest-glow on forest | 12.7 / 9.2 / 7.7 |
+| clay on paper / raised / stone | 5.9 / 6.2 / 5.2 |
+| line-input on paper / raised / stone (non-text, ≥ 3:1) | 3.7 / 3.9 / 3.3 |
 
-Every text/background pair is 4.5:1 or better. The owner's accent is checked
-by the dashboard against `--oat` (the darkest surface it sits on as text) at
-4.5:1, which also guarantees light text on accent buttons.
+Every text/background pair is 4.5:1 or better. The owner's accent is checked by
+the dashboard against warm stone (`#ECE5D9`, the darkest light surface it sits
+on as text) at 4.5:1.
 
-**Dashboard accent** (`src/admin-theme.css`): Light `#4A5D4C` with white text
-(6.9:1 on the dashboard's near-white, 7.1:1 text on it); Dark `#A9C2A8` with
-`#151A15` text (9.6:1 on near-black, 9.2:1 text on it) — the same sage hue,
-deep for light, light and softened for dark.
+**Dashboard accent** (`src/admin-theme.css`, the engine's only theming hook):
+Light `#405846` with white text (7.5:1 on the dashboard, 7.8:1 text); Dark
+`#A9C2A8` with `#121A14` text (10.3:1, 9.3:1).
 
 ---
 
 ## 3. Space, layout, shape
 
-- **Spacing scale** (`--space-1` … `--space-10`): 4, 8, 12, 16, 24, 32, 48,
-  64, 96, 136 px. Sections breathe with `--section-pad`
-  (72 px on phones → 168 px on wide screens).
-- **Wide margins:** `--gutter` = 20 px on phones → 7vw → 112 px max. Content
-  max width `--page-max` 1280 px.
-- **Grid:** 12 columns from 960 px. Compositions are asymmetric: the hero text
-  takes 6 columns and the photo bleeds off the right edge; the room photo
-  bleeds off the left edge in "First visit"; therapists sit beside one tall
-  photo; the treatments ledger keeps a 4/8 split.
-- **Breakpoints** (media queries cannot read custom properties, so these are
-  the only lengths written in the stylesheets): 380 (narrow phones), 600, 640,
-  720 (calendar grid instead of the day rail), 840, 860 (header navigation),
-  960 px (12-column compositions, the summary beside the flow).
-- **Radius:** `--radius-0` 0 for photos and bands (crisp edges, like a print);
-  `--radius-1` 2 px for buttons, inputs, chips; `--radius-pill` only for the
-  small "Sample" tags.
-- **Borders:** hairlines (`--hairline` 1 px, `--rule`) separate everything; no
-  cards with shadows. Controls use `--line-input`.
-- **Elevation:** flat. One exception: the sticky summary/continue bars in the
-  booking flow get `--shadow-soft` so they read above scrolling content.
+- **Spacing** `--space-1` … `--space-10`: 4, 8, 12, 16, 24, 32, 48, 64, 96, 136 px.
+  Sections breathe with `--section-pad` (72 px phones → 152 px wide).
+- **Margins:** `--gutter` 20 px → 7vw → 112 px; content max `--page-max` 1280 px.
+- **Compositions from 960 px:** hero words in ~41 % and a landscape (4:3) photo
+  in ~54 % bleeding to the right edge, never taller than the first screen allows,
+  with the linen print over its lower-left corner — the whole hero, facts
+  included, fits a 1280 × 800 laptop; treatments 4/8
+  with the heading and length filter sticky; the studio photo tall and sticky on
+  the left, words, facts and two staggered detail photos on the right; the
+  ritual as four columns under one thread; therapists beside a sticky photo;
+  questions 4/8.
+- **Phones:** words first, then the photo full-bleed at 4:3 (the print overlaps
+  it), then the facts; the ritual's thread runs down the left.
+- **Breakpoints:** 380, 600, 640, 720 (calendar grid), 840, 960 (compositions,
+  nav, the sheet as a side panel).
+- **Radius:** 0 for photos and bands; 2 px buttons and inputs; 6 px the sheet,
+  choice rows, the summary, booking cards; pills only for chips, time choices
+  and tags.
+- **Elevation:** flat, except the hero print (`--shadow-print`), the sheet
+  (`--shadow-sheet`) and the sticky booking bars.
 
 ---
 
 ## 4. Photography
 
-Diffused north light, pale wood, linen and skin; airy compositions with lots of
-negative space; muted, slightly warm colour. Three photographs (see
-`PHOTOS.md`): hands working over a white towel (hero), a treatment table by a
-tall window (the room), hands at work on a forearm (the therapists' section,
-labelled "Sample photo" — a sample never presents a person as a therapist).
-
-Delivery: each photo is cropped for its one use, exported as **AVIF + WebP at
-three widths** (`npm run photos`, `scripts/build-photos.mjs`), rendered in a
-`<picture>` with `sizes` that match the layout, `width`/`height` on every
-`<img>`, frames with a fixed `aspect-ratio` and `object-fit: cover` so an owner
-replacement never breaks the layout. The hero is eager with
+Six Pexels photographs and one owner-supplied hero (see `PHOTOS.md`): linen,
+pale wood, warm skin tones and soft light; the hero is the one darker,
+lamplit scene, which the ivory page frames like a print. Only the hero shows
+faces, and nobody is named. One shared grade (slightly warmer, a little less
+saturated, a touch brighter) so they read as one set. Each is cropped for its
+frame and shipped as AVIF + WebP at three widths in a `<picture>` with `sizes`
+that match the layout, `width`/`height` on every `<img>`, a fixed
+`aspect-ratio` and `object-fit: cover`. The hero is eager with
 `fetchpriority="high"` and a `<link rel="preload">`; everything else is lazy.
-The room photo gets a gentle warm grade so the set reads as one.
 
-**Service photos** are the owner's (dashboard → Services) and optional. In the
-treatments ledger a service group shows its photo in the name column as a
-3:2 print with a hairline; a group without one simply has no frame (the name
-column is complete on its own). Never a placeholder, never a stock picture.
+**Service photos** are the owner's (dashboard → Services) and optional: they
+appear as small prints under the treatment's name. Never a placeholder or stock
+picture.
 
 ---
 
 ## 5. Motion
 
-Slow and physical, never in the way.
-
 | Token | Value | Use |
 |---|---|---|
 | `--dur-quick` | 160 ms | hover, press, focus |
-| `--dur-step` | 280 ms | booking step change, time unfold |
-| `--dur-enter` | 480 ms | hero entrance (text), with a 40 ms stagger |
-| `--dur-photo` | 600 ms | the hero photo settling in |
-| `--ease-settle` | `cubic-bezier(0.22, 1, 0.36, 1)` | things arriving and settling |
+| `--dur-step` | 280 ms | booking steps, menu filter, FAQ sign |
+| `--dur-enter` | 480 ms | hero words rise (40 ms stagger) |
+| `--dur-photo` | 900 ms | the hero photo settles from 1.03, the print rises |
+| `--dur-sheet` | 420 ms | the sheet rises (phones) or slides in (wide) |
+| `--ease-settle` | `cubic-bezier(0.22, 1, 0.36, 1)` | arriving |
 | `--ease-soft` | `cubic-bezier(0.65, 0, 0.35, 1)` | state changes |
 
-Moments: the hero text rises 10 px and fades in (staggered, 600 ms in total;
-the button is usable at once); the hero photo settles from 1.03 scale; each booking
-step fades up when it appears; the chosen time unfolds its Continue bar.
 Nothing delays reading or booking. Under `prefers-reduced-motion: reduce` every
-duration is near zero and nothing moves.
+duration is near zero and nothing moves or scrolls smoothly.
 
 ---
 
 ## 6. Components and states
 
-- **Buttons:** primary = accent fill, `--on-accent` text, 52 px tall (≥ 44 px
-  everywhere), 2 px radius, label weight 500. Quiet = text with an underline
-  that thickens on hover. Busy buttons keep their size and say what is
-  happening ("Sending your code…").
-- **Focus:** 2 px accent outline, 3 px offset, on every interactive element.
-- **Calendar:** month grid from 720 px (cells ≥ 46 px), a horizontal day rail on
-  phones (64 × 84 px cards). One mark per day at most: a sage dot = open,
-  "2 left" = few left (plain, never red), struck-through number = fully booked,
-  pale number = closed, faded and unfocusable = outside the booking window.
-  Today has a thin ring; the chosen day is filled with the accent.
-- **Times:** Morning / Afternoon / Evening switch with counts, times as 48 px
-  chips; the chosen time unfolds "Wed, Nov 4 · 10:30 a.m. — Continue".
-- **Notices:** a hairline on the left (accent for information, clay for
-  errors), plain text and one action. Errors are announced (`role="alert"`).
-- **Sample labels:** a small sage pill "Sample" on therapist profiles and
-  "Sample photo" on the therapists' photo until the owner replaces them.
+- **Buttons:** primary = accent fill, ivory text, 52 px (≥ 44 px everywhere);
+  on forest the button turns ivory with forest text. Quiet links underline on hover.
+- **Book buttons** (header, hero, every treatment length, the booking band, the
+  footer) open the sheet; while online booking is off they lead to `#book`,
+  which then shows the studio's phone and email.
+- **Length filter:** pill chips (`aria-pressed`) with a live count for screen readers.
+- **FAQ:** native `<details>`, the first one open; a thin plus turns into a minus.
+- **Booking sheet:** a modal `<dialog>` (focus trapped by the browser, Esc, ✕,
+  Back and a click beside it close it; focus returns to the opener; the page
+  behind is locked). Full screen on phones with the session strip pinned under
+  the header; from 960 px a 1056 px panel from the right with the summary card
+  beside the steps. Each step's heading takes focus and scrolls into view.
+  **The primary action is always in reach:** the chosen-time bar (Continue) and
+  the details step's submit row sit in the flow and pin themselves to the foot
+  of the sheet whenever the content runs below it; the sheet's
+  `scroll-padding-bottom` keeps a focused field or a just-chosen time above them.
+  Spacing inside the sheet is denser than on the page (40 px calendar cells,
+  tighter stepper, headings and fields) so the time step fits a 1440 × 900
+  screen whole. Sticky offsets measure from the scroll container's padding, so
+  the sheet body has no bottom padding — the space sits on its content.
+- **Calendar:** month grid from 720 px, a day rail on phones; sage dot = open,
+  "2 left" = few left, struck = full, pale = closed; the chosen day fills with
+  the accent. Times are pill chips grouped Morning / Afternoon / Evening.
+- **Notices:** a rule on the left (accent for information, clay for errors), one action.
+- **Sample labels:** "Sample" on therapist profiles and the visit details in the
+  demo/preview, "Sample photo" on the therapists' photo, until the owner replaces them.

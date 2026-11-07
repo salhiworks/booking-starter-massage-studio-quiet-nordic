@@ -20,9 +20,9 @@ export function Done({ outcome, business, headingRef, onAgain }: DoneProps) {
   if (outcome.kind === 'preview') {
     return (
       <div className="done done--preview">
-        <h3 className="step-title" tabIndex={-1} ref={headingRef}>
+        <h2 className="step-title" tabIndex={-1} ref={headingRef} data-step-heading="">
           Preview — nothing was saved
-        </h3>
+        </h2>
         <p>
           This site is running on sample data, so no email was sent and no session was stored. Once the studio's booking system is
           connected, guests see their confirmation here.
@@ -37,9 +37,9 @@ export function Done({ outcome, business, headingRef, onAgain }: DoneProps) {
   if (outcome.kind === 'limit') {
     return (
       <div className="done">
-        <h3 className="step-title" tabIndex={-1} ref={headingRef}>
+        <h2 className="step-title" tabIndex={-1} ref={headingRef} data-step-heading="">
           You already have sessions booked with us
-        </h3>
+        </h2>
         <ContactInstead
           business={business}
           title="Let's find a time together"
@@ -55,9 +55,9 @@ export function Done({ outcome, business, headingRef, onAgain }: DoneProps) {
   return (
     <div className="done">
       <p className="done__mark" aria-hidden="true" />
-      <h3 className="step-title" tabIndex={-1} ref={headingRef}>
+      <h2 className="step-title" tabIndex={-1} ref={headingRef} data-step-heading="">
         {pending ? 'Request received — we’ll confirm your session shortly.' : 'Your session is booked.'}
-      </h3>
+      </h2>
       <p>
         {__BOOKING_DEMO__ ? (
           // Live Demo build only: no email exists to promise.

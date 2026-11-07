@@ -5,7 +5,12 @@ import { weeklyRows } from '../lib/hours';
 import type { OpeningInfo } from '../lib/useOpening';
 import type { Resource } from '../lib/resource';
 import { telHref } from '../lib/contact';
+import { engine } from '../lib/engine';
+import { Emphasis } from './Emphasis';
 import { Notice } from './Notice';
+
+/** The Live Demo and preview mode show a fictional studio: say so next to its details. */
+const SAMPLE_BUSINESS = __BOOKING_DEMO__ || engine.mode === 'preview';
 
 interface VisitProps {
   values: SiteValues;
@@ -18,8 +23,18 @@ export function Visit({ values, business, opening, onRetry }: VisitProps) {
   return (
     <section id="visit" className="section visit" aria-labelledby="visit-title">
       <div className="page">
-        <header className="section-head">
-          <h2 id="visit-title">{values['visit.title']}</h2>
+        <header className="section-head visit__head">
+          <p className="eyebrow">Find us</p>
+          <h2 id="visit-title">
+            <Emphasis text={values['visit.title']} />
+          </h2>
+          {SAMPLE_BUSINESS && (
+            <p className="sample-note">
+              <span className="tag">Sample</span>
+              {__BOOKING_DEMO__ ? 'This demo shows a fictional studio' : 'Preview shows a fictional studio'} — its address, phone and email are
+              examples.
+            </p>
+          )}
         </header>
         <div className="visit__grid">
           <BusinessColumns business={business} opening={opening} onRetry={onRetry} />

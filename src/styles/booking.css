@@ -1,27 +1,186 @@
-/* The booking flow: a calm form on a soft sage desk. Values come from tokens.css. */
+/* The booking flow in a linen sheet over the page. Values come from tokens.css. */
 
-.book {
-  background: var(--sage-100);
+/* ── The sheet: full screen on phones, a wide panel from the right from 960 px ── */
+
+.sheet {
+  position: fixed;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  max-inline-size: none;
+  max-block-size: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink-soft);
+  overflow: hidden;
 }
 
-.desk {
-  background: var(--raised);
-  border: var(--hairline) solid var(--rule);
-  padding: var(--desk-pad);
+.sheet::backdrop {
+  background: var(--veil);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
 }
 
-@media (max-width: 639px) {
-  .desk {
-    margin-inline: calc(var(--gutter) * -1);
-    padding: var(--space-5) var(--space-4) var(--space-6);
-    border-inline: 0;
+.sheet[open]::backdrop {
+  animation: fade var(--dur-sheet) var(--ease-soft) both;
+}
+
+.sheet__panel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+}
+
+.sheet[open] .sheet__panel {
+  animation: sheet-up var(--dur-sheet) var(--ease-settle) both;
+}
+
+.sheet__head {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--sheet-pad);
+  background: var(--forest);
+  color: var(--on-forest);
+}
+
+.sheet__titles {
+  display: grid;
+  gap: var(--hairline);
+  min-width: 0;
+}
+
+.sheet__business {
+  font-size: var(--text-micro);
+  font-weight: var(--weight-strong);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--forest-glow);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sheet__title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-display);
+  letter-spacing: var(--tracking-display);
+  line-height: var(--leading-tight);
+  color: var(--on-forest);
+}
+
+.sheet__title:focus {
+  outline: none;
+}
+
+.sheet .sheet__close {
+  flex: none;
+  border-color: var(--forest-line);
+  color: var(--on-forest);
+}
+
+.sheet .sheet__close:hover {
+  background: var(--forest-2);
+}
+
+.sheet .sheet__close:focus-visible {
+  outline-color: var(--on-forest);
+}
+
+.sheet__body {
+  flex: 1;
+  min-block-size: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  /* No bottom padding here: sticky bars measure from it. The space lives on the content (below). */
+  padding: var(--space-5) var(--sheet-pad) 0;
+  scroll-padding-top: var(--sticky-offset);
+  /* Room for the pinned Continue / submit bar: focused fields and a chosen time stay above it. */
+  scroll-padding-bottom: calc(var(--control) + var(--space-7));
+}
+
+.sheet,
+.sheet__body {
+  --sheet-pad: var(--space-4);
+}
+
+@media (min-width: 640px) {
+  .sheet,
+  .sheet__body {
+    --sheet-pad: var(--space-6);
+  }
+}
+
+@media (min-width: 960px) {
+  .sheet,
+  .sheet__body {
+    --sheet-pad: var(--space-7);
+  }
+
+  .sheet__panel {
+    inset-inline-start: auto;
+    inline-size: min(var(--sheet-width), 100%);
+    border-radius: var(--radius-2) 0 0 var(--radius-2);
+    overflow: hidden;
+    box-shadow: var(--shadow-sheet);
+  }
+
+  .sheet[open] .sheet__panel {
+    animation-name: sheet-in;
+  }
+
+  .sheet__head {
+    padding-block: var(--space-4);
+  }
+
+  .sheet__body {
+    padding-top: var(--space-6);
+    scroll-padding-top: var(--space-6);
+  }
+}
+
+@keyframes sheet-up {
+  from {
+    transform: translateY(var(--space-7));
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes sheet-in {
+  from {
+    transform: translateX(var(--space-8));
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
 .flow {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: var(--space-6);
+  gap: var(--space-4);
 }
 
 .flow--loading .skeleton--steps {
@@ -37,7 +196,7 @@
 .flow__steps {
   display: none;
   list-style: none;
-  padding: 0 0 var(--space-4);
+  padding: 0 0 var(--space-3);
   gap: var(--space-6);
   border-bottom: var(--hairline) solid var(--rule);
   font-size: var(--text-sm);
@@ -110,12 +269,12 @@
 .flow__step {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: var(--space-3);
+  gap: var(--space-2);
   animation: rise var(--dur-step) var(--ease-settle) both;
 }
 
 .step-title {
-  font-size: var(--text-2xl);
+  font-size: clamp(1.75rem, 1.4rem + 1vw, 2.25rem);
   scroll-margin-top: var(--sticky-offset);
 }
 
@@ -148,6 +307,7 @@
   gap: var(--space-4);
   padding: var(--space-5);
   background: var(--oat);
+  border-radius: var(--radius-2);
   border-top: var(--rule-strong) solid var(--accent);
 }
 
@@ -212,7 +372,7 @@
     grid-column: 2;
     grid-row: 1;
     position: sticky;
-    top: var(--space-5);
+    top: 0;
   }
 }
 
@@ -224,9 +384,10 @@
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
     gap: var(--space-1) var(--space-3);
-    margin-inline: calc(var(--space-4) * -1);
-    padding: var(--space-2) var(--space-4);
+    margin-inline: calc(var(--sheet-pad, var(--space-4)) * -1);
+    padding: var(--space-2) var(--sheet-pad, var(--space-4));
     background: var(--raised);
+    border-radius: 0;
     border-top: 0;
     border-bottom: var(--hairline) solid var(--rule);
     box-shadow: var(--shadow-top);
@@ -268,6 +429,10 @@
     font-family: var(--font-text);
     font-size: var(--text-sm);
     font-weight: var(--weight-strong);
+  }
+
+  .summary__row:not(.summary__row--treatment):not(.summary__row--when) {
+    white-space: nowrap;
   }
 
   .summary__row:not(.summary__row--treatment):not(.summary__row--when) dd::before {
@@ -329,7 +494,7 @@
   min-block-size: var(--control);
   padding: var(--space-3) var(--space-4);
   border: var(--hairline) solid var(--line-soft);
-  border-radius: var(--radius-1);
+  border-radius: var(--radius-2);
   background: var(--raised);
   text-align: start;
   cursor: pointer;
@@ -393,8 +558,8 @@
 .cal {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: var(--space-4);
-  margin-top: var(--space-3);
+  gap: var(--space-3);
+  margin-top: var(--space-2);
 }
 
 .cal__head {
@@ -567,11 +732,11 @@
 
 .rail {
   min-width: 0;
-  margin-inline: calc(var(--space-4) * -1);
+  margin-inline: calc(var(--sheet-pad, var(--space-4)) * -1);
 }
 
 .rail .quiet-state {
-  padding-inline: var(--space-4);
+  padding-inline: var(--sheet-pad, var(--space-4));
 }
 
 .rail__list {
@@ -580,7 +745,7 @@
   gap: var(--space-2);
   list-style: none;
   margin: 0;
-  padding: var(--space-1) var(--space-4) var(--space-3);
+  padding: var(--space-1) var(--sheet-pad, var(--space-4)) var(--space-3);
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scroll-snap-type: x proximity;
@@ -605,7 +770,7 @@
   block-size: var(--day-card-h);
   padding: 0;
   border: var(--hairline) solid var(--line-soft);
-  border-radius: var(--radius-1);
+  border-radius: var(--radius-2);
   background: var(--raised);
   color: var(--ink);
   cursor: pointer;
@@ -678,8 +843,8 @@
 .times-block {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: var(--space-4);
-  margin-top: var(--space-6);
+  gap: var(--space-3);
+  margin-top: var(--space-4);
 }
 
 .times-block--loading .skeleton--parts {
@@ -767,10 +932,11 @@
   min-block-size: var(--chip);
   padding: 0 var(--space-2);
   border: var(--hairline) solid var(--line-soft);
-  border-radius: var(--radius-1);
+  border-radius: var(--radius-pill);
   background: var(--raised);
   color: var(--ink);
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
   cursor: pointer;
   transition:
     background-color var(--dur-quick) var(--ease-soft),
@@ -812,16 +978,19 @@
   color: var(--muted);
 }
 
+/* The chosen time and Continue: right after the times, and pinned to the foot of
+   the sheet whenever the times run below it, so the next step is always in reach. */
 .choice-bar {
+  border-radius: var(--radius-2);
   position: sticky;
-  bottom: 0;
+  bottom: var(--space-3);
   z-index: var(--layer-sticky);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-4);
-  margin-top: var(--space-5);
-  padding: var(--space-3) var(--space-4);
+  margin-top: var(--space-4);
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);
   background: var(--raised);
   border: var(--hairline) solid var(--rule);
   box-shadow: var(--shadow-soft);
@@ -845,9 +1014,13 @@
   font-variant-numeric: tabular-nums;
 }
 
-@media (max-width: 639px) {
+@media (max-width: 959px) {
   .choice-bar {
-    margin-inline: calc(var(--space-4) * -1);
+    position: sticky;
+    bottom: 0;
+    margin-inline: calc(var(--sheet-pad, var(--space-4)) * -1);
+    padding: var(--space-3) var(--sheet-pad, var(--space-4)) calc(var(--space-3) + env(safe-area-inset-bottom));
+    border-radius: 0;
     border-inline: 0;
   }
 }
@@ -858,7 +1031,7 @@
 .code {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: var(--space-5);
+  gap: var(--space-4);
   max-width: var(--form-max);
   margin-top: var(--space-3);
 }
@@ -946,6 +1119,18 @@
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-3) var(--space-6);
+}
+
+/* Details: the submit row stays pinned to the foot of the sheet while the form scrolls. */
+.details .step-actions {
+  position: sticky;
+  bottom: 0;
+  z-index: var(--layer-sticky);
+  padding-block: var(--space-3) calc(var(--space-3) + env(safe-area-inset-bottom));
+  background: var(--paper);
+  border-top: var(--hairline) solid var(--rule);
+  box-shadow: 0 -1rem 1rem -1rem var(--scrim);
+  column-gap: var(--space-5);
 }
 
 .fine-print {
@@ -1067,7 +1252,7 @@
 }
 
 .contact-instead__title {
-  font-size: var(--text-2xl);
+  font-size: var(--text-xl);
 }
 
 .contact-instead__list {
@@ -1076,4 +1261,62 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-3);
+}
+
+/* ── Density inside the sheet: calmer spacing, less height ── */
+
+.sheet {
+  --day-cell: 2.5rem;
+}
+
+.sheet .field {
+  gap: var(--space-1);
+}
+
+.sheet .field textarea {
+  min-block-size: calc(var(--control) * 1.6);
+}
+
+.sheet .zone-note {
+  margin-top: var(--space-3);
+}
+
+.sheet .cal__grid td {
+  padding-block: var(--hairline);
+}
+
+.sheet .cal__grid th {
+  padding-bottom: var(--space-1);
+}
+
+.sheet .summary {
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+}
+
+.sheet .summary__row {
+  padding-block: var(--space-1);
+}
+
+@media (min-width: 960px) {
+  .sheet__head {
+    padding-block: var(--space-3);
+  }
+
+  .sheet__title {
+    font-size: var(--text-lg);
+  }
+
+  .sheet__body {
+    padding-top: var(--space-5);
+  }
+
+  .sheet .summary {
+    top: 0;
+  }
+}
+
+/* The breathing room at the foot of the sheet (see .sheet__body). */
+.sheet__body > * {
+  padding-bottom: var(--space-7);
 }

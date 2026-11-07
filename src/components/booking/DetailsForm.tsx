@@ -81,7 +81,7 @@ export function DetailsForm({ details, onChange, errors, onErrors, requirePhone,
       <div className="field">
         <label htmlFor="bf-email">Email</label>
         <p className="field__hint" id="bf-email-hint">
-          We'll send a 6-digit code here to confirm it's you.
+          {__BOOKING_DEMO__ ? 'In this demo no email is sent — you’ll type any 6 digits next.' : 'We’ll send a 6-digit code here to confirm it’s you.'}
         </p>
         <input
           ref={emailRef}

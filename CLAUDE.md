@@ -60,8 +60,9 @@ Read before changing anything:
 | Content store + brand → CSS variables (`--accent`, `data-headings`) | `src/lib/content.ts` |
 | Design tokens — the ONLY file with raw colours, fonts, sizes, spacing | `src/styles/tokens.css` |
 | Base / page / booking styles (tokens only) | `src/styles/base.css`, `site.css`, `booking.css` |
-| Sections | `src/components/*.tsx` (Hero, Treatments, FirstVisit, Therapists, Visit, Footer) |
-| Booking flow | `src/components/booking/` (BookingFlow = state + engine calls; DayPicker, TimePicker, DetailsForm, CodeStep, Summary, Done) |
+| Sections | `src/components/*.tsx` (Header, Hero, Treatments, Studio, Ritual, Therapists, Questions, Visit, Footer; `Emphasis` renders the owner's `*italic*`) |
+| Booking sheet (a modal `<dialog>` at `#book`; Back/Esc/✕ close it) + the `#book` band | `src/App.tsx` (open/close + history), `src/components/booking/BookingSheet.tsx`, `BookingSection.tsx`, `src/lib/dialog.ts` |
+| Booking flow | `src/components/booking/` (BookingFlow = state + engine calls, root `#book-flow`; DayPicker, TimePicker, DetailsForm, CodeStep, Summary, Done) |
 | "Open now" + hours changes (from `getOpeningTimes`, fallback to weekly hours) | `src/lib/useOpening.ts`, `src/lib/hours.ts` |
 | Photo variant map | `public/photos/`, `src/content/photoVariants.ts` (generated) |
 | Content baked into `index.html` at build | `vite.config.ts` (`publishedSiteContent`) |
@@ -72,6 +73,7 @@ Read before changing anything:
   `src`/`alt`. Never rename or reuse a field id on a live site — add a new id. Services, prices, durations,
   hours, the address, phone and email are NOT content: they come from the engine.
 - `src/content/site.ts` is also imported by `vite.config.ts` (Node): keep it free of local imports.
+- **Every Book button** calls `startBooking()` (App): it opens the sheet, or — while online booking is off, unconfigured or failing — leads to the `#book` section and its contact details. Keep it that way for any new button.
 - **Default photos:** add your own variants to `public/photos/` (the original downloads and their script are not part of this starter), keep the
   default `src` in `site.ts` equal to a key in `photoVariants.ts`, record the source in `PHOTOS.md`.
   If the hero default changes, update the `<link rel="preload">` in `index.html` (its `imagesizes` must

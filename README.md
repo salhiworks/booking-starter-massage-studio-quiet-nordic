@@ -4,13 +4,13 @@ A finished, premium booking website for a massage & wellness studio, ready to ma
 with Claude Code and publish on Hostinger. It ships as **Quiet Room Massage**,
 a fictional massage & wellness studio in Vancouver, BC:
 
-- a one-page studio website (treatments as a quiet ledger, your first visit, the therapists, a calm booking desk, visit details) that works from 320 px phones up;
+- a one-page studio website (a treatment menu with a length filter, the studio, the ritual of a visit, the therapists, questions, visit details) that works from 320 px phones up, with booking in a linen sheet over the page;
 - online booking — service, day and time, details and an emailed 6-digit code;
 - the owner dashboard at `/admin/` — appointments, requests to confirm,
   services and prices, opening hours and closures, email health, and the
   website's own text, photos, colours and heading style.
 
-The look: warm white paper, oat and stone surfaces with soft sage, an airy light serif (Newsreader) with a calm humanist sans, thin rules and slow motion.
+The look — *Quiet Nordic · Linen & Daylight*: soft ivory, warm stone and quiet sage with one deep forest green, a light Newsreader serif (with italic accents) over Albert Sans, daylight photography of linen, wood and hands at work, thin rules and slow motion.
 
 Booking runs on [`@profitstudio/booking-engine`](https://www.npmjs.com/package/@profitstudio/booking-engine)
 **2.0.0-beta.3** (pinned) with your own Supabase project and Resend for email.

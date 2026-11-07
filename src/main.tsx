@@ -1,7 +1,8 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import '@fontsource-variable/newsreader/opsz.css';
-import '@fontsource-variable/source-sans-3/wght.css';
+import '@fontsource-variable/newsreader/opsz-italic.css';
+import '@fontsource-variable/albert-sans/wght.css';
 import './styles/tokens.css';
 import './styles/base.css';
 import './styles/site.css';
